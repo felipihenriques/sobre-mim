@@ -45,3 +45,14 @@
 @media(max-width:600px){.mascot-options{max-width:270px}.mascot-options[open]{bottom:-100px}.hero-visual:has(.mascot-options[open]){margin-bottom:100px}}
 
 .mascot-options{max-height:360px;overflow:auto}.mascot-options input[type=range]{width:115px;accent-color:#75adff}.mascot-projects-link{display:block;margin-top:14px;color:#aaceff;text-underline-offset:4px}.mascot-options button{min-height:36px}
+
+@keyframes entrada-projeto { from { opacity: .55; translate: 0 24px; } to { opacity: 1; translate: 0 0; } }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    body:not(.reduced-motion) .project-content { animation: entrada-projeto linear both; animation-timeline: view(); animation-range: entry 0% entry 85%; }
+  }
+}
+#conhecimentos .skills-grid { display: flex; overflow-x: auto; scroll-snap-type: x proximity; gap: clamp(14px, 2vw, 26px); padding: 6px 2px 18px; scrollbar-color: #6089ce #172339; }
+#conhecimentos .skill-card { flex: 0 0 min(82%, 340px); min-width: 0; scroll-snap-align: start; }
+#conhecimentos .skills-grid:focus-visible { outline: 2px solid #8db9ff; outline-offset: 4px; }
+@media print { #conhecimentos .skills-grid { display: grid; overflow: visible; } }
