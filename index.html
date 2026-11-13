@@ -1,6 +1,86 @@
 <!doctype html>
-<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#03060b"><meta name="description" content="Conheça os projetos de Felipi Henriques Guimarães, estudante de Engenharia de Software: HG Games, lógica em Python e sua jornada de aprendizado em nuvem AWS."><title>Felipi Guimarães — Código, projetos & possibilidades</title><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b1528'/%3E%3Ctext x='10' y='43' font-size='34' font-family='monospace' fill='%23548dff'%3Efg%3C/text%3E%3C/svg%3E"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="portfolio-updates.css"></head>
-<body><a class="skip-link" href="#projetos">Ir para os projetos</a><div class="page-glow" aria-hidden="true"></div><header class="header"><a class="brand" href="#inicio" aria-label="Felipi Guimarães, início"><span class="brand-symbol">f<span>g</span><b>_</b></span><span class="brand-name">FELIPI GUIMARÃES<small>PERSONAL PORTFOLIO</small></span></a><button id="menu-button" aria-label="Abrir menu" aria-expanded="false" aria-controls="main-nav">☰</button><nav id="main-nav" aria-label="Navegação principal"><a href="#projetos">Projetos</a><a href="#sobre">Sobre mim</a><a href="#conhecimentos">Conhecimentos</a></nav><button id="search-button" aria-label="Buscar projetos e seções">Buscar <kbd>Ctrl K</kbd></button><a class="header-cta" href="https://www.linkedin.com/feed/update/urn:li:activity:7510793193815420928/" target="_blank" rel="noopener noreferrer">Meu LinkedIn ↗</a></header>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#03060b"><meta name="description" content="Conheça os projetos de Felipi Henriques Guimarães, estudante de Engenharia de Software: HG Games, lógica em Python e sua jornada de aprendizado em nuvem AWS."><title>Felipi Guimarães — Código, projetos & possibilidades</title><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b1528'/%3E%3Ctext x='10' y='43' font-size='34' font-family='monospace' fill='%23548dff'%3Efg%3C/text%3E%3C/svg%3E"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="portfolio-updates.css">
+<style>
+  .intro-screen {
+    position: fixed; inset: 0; z-index: 10000;
+    display: grid; place-items: center;
+    background: #06090f; color: #f2f5ff; cursor: pointer;
+  }
+  .intro-word {
+    display: inline-flex; align-items: baseline; white-space: pre;
+    font: 650 clamp(3rem, 9vw, 7rem)/1 system-ui, sans-serif;
+    letter-spacing: -.065em;
+  }
+  .intro-point {
+    width: .17em; height: .17em; margin-inline-start: .075em;
+    border-radius: 50%; background: #70a2ff;
+  }
+  @media (prefers-reduced-motion: reduce), print {
+    .intro-screen { display: none; }
+  }
+</style>
+</head>
+<body>
+<script>
+(() => {
+  const motion = matchMedia('(prefers-reduced-motion: reduce)');
+  if (motion.matches || location.hash || !Element.prototype.animate) return;
+  try {
+    if (sessionStorage.getItem('felipi-intro-seen')) return;
+    sessionStorage.setItem('felipi-intro-seen', '1');
+  } catch { /* The opening also works when storage is unavailable. */ }
+
+  const screen = document.createElement('div');
+  screen.className = 'intro-screen';
+  screen.setAttribute('aria-hidden', 'true');
+  const word = document.createElement('span');
+  word.className = 'intro-word';
+  const name = 'Felipi Dev';
+  for (const letter of name) {
+    const glyph = document.createElement('span');
+    glyph.textContent = letter;
+    word.append(glyph);
+  }
+  const point = document.createElement('span');
+  point.className = 'intro-point';
+  word.append(point);
+  screen.append(word);
+  document.body.prepend(screen);
+
+  const events = new AbortController();
+  function finish() {
+    clearTimeout(deadline);
+    events.abort();
+    screen.remove();
+  }
+  const deadline = setTimeout(finish, 2600);
+  const options = { signal: events.signal };
+  screen.addEventListener('click', finish, options);
+  window.addEventListener('keydown', finish, options);
+  window.addEventListener('pagehide', finish, options);
+  motion.addEventListener('change', finish, options);
+
+  Array.from(word.children).slice(0, -1).forEach((glyph, index) => {
+    const offset = (index - (name.length - 1) / 2) * .16;
+    glyph.animate([
+      { opacity: 0, filter: 'blur(10px)', transform: 'translateX(' + offset + 'em) scale(1.12)' },
+      { opacity: 1, filter: 'blur(0)', transform: 'none' }
+    ], { duration: 630, delay: 50 + 45 * index, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'backwards' });
+  });
+  point.animate([
+    { transform: 'scale(0)' }, { transform: 'scale(1.22)', offset: .72 }, { transform: 'scale(1)' }
+  ], { duration: 350, delay: 750, fill: 'backwards' });
+  word.animate([{ opacity: 1 }, { opacity: 0, filter: 'blur(6px)' }],
+    { duration: 340, delay: 1400, fill: 'forwards' });
+
+  const dot = point.getBoundingClientRect();
+  const center = ' at ' + (dot.left + dot.width / 2) + 'px ' + (dot.top + dot.height / 2) + 'px)';
+  screen.animate([{ clipPath: 'circle(150%' + center }, { clipPath: 'circle(0%' + center }],
+    { duration: 680, delay: 1420, easing: 'cubic-bezier(.6,0,.8,.35)', fill: 'forwards' }
+  ).onfinish = finish;
+})();
+</script>
+<a class="skip-link" href="#projetos">Ir para os projetos</a><div class="page-glow" aria-hidden="true"></div><header class="header"><a class="brand" href="#inicio" aria-label="Felipi Guimarães, início"><span class="brand-symbol">f<span>g</span><b>_</b></span><span class="brand-name">FELIPI GUIMARÃES<small>PERSONAL PORTFOLIO</small></span></a><button id="menu-button" aria-label="Abrir menu" aria-expanded="false" aria-controls="main-nav">☰</button><nav id="main-nav" aria-label="Navegação principal"><a href="#projetos">Projetos</a><a href="#sobre">Sobre mim</a><a href="#conhecimentos">Conhecimentos</a></nav><button id="search-button" aria-label="Buscar projetos e seções">Buscar <kbd>Ctrl K</kbd></button><a class="header-cta" href="https://www.linkedin.com/feed/update/urn:li:activity:7510793193815420928/" target="_blank" rel="noopener noreferrer">Meu LinkedIn ↗</a></header>
 <main><section class="hero wrap" id="inicio"><div class="hero-copy"><p class="eyebrow"><span class="live-dot"></span> ESTUDANTE DE ENGENHARIA DE SOFTWARE</p><h1>Ideias em código.<br>Projetos com<br><span>identidade.</span></h1><p class="hero-intro">Eu sou <strong>Felipi Henriques Guimarães.</strong><br>Sou estudante de Engenharia de Software. Aqui compartilho meus projetos, experiências e aprendizados em tecnologia.</p><div class="hero-actions"><a class="button button-primary" href="#projetos">Explore meus projetos <span>↗</span></a><a class="button button-quiet" href="#sobre">Conheça minha história ↓</a></div><div class="hero-tags"><span>DESENVOLVIMENTO</span><i>+</i><span>PYTHON</span><i>+</i><span>CLOUD</span></div></div><div class="hero-visual"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="visual-grid"></div><span class="floating-code code-one" aria-hidden="true">&lt;hello world /&gt;</span><span class="floating-code code-two" aria-hidden="true">{ build. learn. repeat. }</span><div id="character-stage"><div id="character-figure"><img id="character-front" data-character-image="front" src="assets/felipi-mascot.png" width="1280" height="1280" decoding="async" alt="Mascote de desenho animado de Felipi, sorrindo e acenando com um notebook no colo" fetchpriority="high"><img id="character-profile" data-character-image="profile" src="assets/felipi-profile.png" width="1280" height="1280" decoding="async" alt="Mascote de Felipi visto de perfil, sentado com o notebook" hidden><img id="character-back" data-character-image="back" src="assets/felipi-back.png" width="1280" height="1280" decoding="async" alt="Mascote de Felipi visto de costas, com moletom azul e notebook" hidden></div></div><div class="character-bubble"><span class="live-dot"></span><span id="character-message">Mova o mouse para explorar os ângulos.</span></div><span class="avatar-caption">FELIPI / DIGITAL EDITION</span></div><div class="hero-baseline"><span>APRENDER. CONSTRUIR. EVOLUIR.</span><a href="#projetos">MINHA JORNADA EM PROJETOS <span>↓</span></a><button id="motion-button" aria-pressed="false">Pausar movimento</button></div></section>
 <section id="projetos" class="work-section wrap"><div class="section-heading"><p class="eyebrow">01 / DA IDEIA À PRÁTICA</p><h2>Cada projeto,<br><span>um próximo nível.</span></h2><p>Uma jornada que conecta desenvolvimento web,<br class="desktop"> processos, interfaces, programação e computação em nuvem.</p></div><div class="filter-row"><div class="filters" role="group" aria-label="Filtrar projetos"><button class="active" data-filter="all" aria-pressed="true">Todos</button><button data-filter="web" aria-pressed="false">Web</button><button data-filter="learning" aria-pressed="false">Aprendizado</button></div><span id="project-count" aria-live="polite">6 itens</span></div><div class="journey-layout"><aside class="journey-rail" aria-label="Trilha de projetos"><div class="rail-top">UM PASSO DE CADA VEZ <span>↗</span></div><svg viewBox="0 0 400 770" fill="none" aria-hidden="true"><defs><linearGradient id="beam" x1="200" y1="0" x2="200" y2="770" gradientUnits="userSpaceOnUse"><stop stop-color="#3978ff" stop-opacity=".18"/><stop offset="1" stop-color="#3978ff" stop-opacity="0"/></linearGradient><linearGradient id="road" x1="210" y1="60" x2="210" y2="730" gradientUnits="userSpaceOnUse"><stop stop-color="#9ac4ff"/><stop offset=".6" stop-color="#3579ff"/><stop offset="1" stop-color="#122748"/></linearGradient></defs><path d="M200 50L385 770H15L200 50Z" fill="url(#beam)" stroke="#183256"/><path d="M200 50C130 125 290 150 210 240S80 325 200 390S315 480 200 550S90 650 200 740" stroke="#3b7aff" stroke-opacity=".15" stroke-width="15"/><path id="journey-path" d="M200 50C130 125 290 150 210 240S80 325 200 390S315 480 200 550S90 650 200 740" stroke="url(#road)" stroke-width="3"/><g fill="#102b57" stroke="#649fff" stroke-width="2"><circle cx="200" cy="50" r="6" fill="#a9d3ff"/><circle cx="210" cy="240" r="5"/><circle cx="200" cy="390" r="5"/><circle cx="200" cy="550" r="5"/><circle cx="200" cy="740" r="5"/></g><g stroke="#3765a1" stroke-opacity=".14"><path d="M150 250Q200 275 250 250"/><path d="M110 400Q200 450 290 400"/><path d="M70 560Q200 635 330 560"/></g><g id="journey-light" aria-hidden="true"><circle r="17" fill="#548dff" opacity=".15"/><circle r="8" fill="#8ebeff" opacity=".4"/><circle r="4" fill="#eff8ff"/></g></svg><button class="journey-stop journey-position-1 active" data-journey="hg-games" aria-current="step"><i></i><span><small>01 / CONSTRUIR</small>HG Games</span></button><button class="journey-stop journey-position-2" data-journey="marketplace-project"><i></i><span><small>02 / TRANSFORMAR</small>Marketplace</span></button><button class="journey-stop journey-position-3" data-journey="python-project"><i></i><span><small>03 / MAPEAR</small>Fluxograma</span></button><button class="journey-stop journey-position-4" data-journey="flow-code-project"><i></i><span><small>04 / DESENVOLVER</small>Fluxograma + Código</span></button><button class="journey-stop journey-position-5" data-journey="voa-mundo-project"><i></i><span><small>05 / DESENHAR</small>Voa Mundo</span></button><button class="journey-stop journey-position-6" data-journey="formacao"><i></i><span><small>06 / EXPLORAR</small>Cloud & AWS</span></button><div class="rail-bottom"><span class="live-dot"></span> A PRÓXIMA ETAPA ESTÁ EM CONSTRUÇÃO</div></aside>
 <div class="project-list"><article class="project-card" id="hg-games" data-category="web"><div class="panel-top"><span>PROJETO 01</span><span><i class="live-dot"></i> WEB</span></div><a class="project-cover game-cover" href="https://hggames-site.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Abrir o site HG Games"><div class="game-grid"></div><div class="game-orb"></div><span class="cover-overline">ENTRE NO UNIVERSO</span><div class="game-title"><span>HG</span> GAMES<span class="pixel-dot">■</span></div><div class="game-bottom"><span>PROJETO WEB PARA CLIENTE</span><span class="round-arrow">↗</span></div><span class="cover-caption">CAPA CONCEITUAL</span></a><div class="project-content"><div class="project-title-row"><h3>HG Games</h3><span class="index">/01</span></div><p>Projeto web desenvolvido para um cliente. Acesse o HG Games e conheça o trabalho.</p><div class="tags"><span>PROJETO PARA CLIENTE</span><span>WEB</span></div><a class="project-link" href="https://hggames-site.vercel.app/" target="_blank" rel="noopener noreferrer">Explorar projeto <span>↗</span></a><a class="project-link linkedin-project" href="https://www.linkedin.com/feed/update/urn:li:activity:7507883123452547073/" target="_blank" rel="noopener noreferrer">Ver publicação no LinkedIn <span>↗</span></a></div></article>
