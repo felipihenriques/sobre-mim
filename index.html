@@ -1,12 +1,47 @@
 <!doctype html>
-<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#03060b"><meta name="description" content="Conheça os projetos de Felipi Henriques Guimarães, estudante de Engenharia de Software: HG Games, lógica em Python e sua jornada de aprendizado em nuvem AWS."><title>Felipi Guimarães — Código, projetos & possibilidades</title><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b1528'/%3E%3Ctext x='10' y='43' font-size='34' font-family='monospace' fill='%23548dff'%3Efg%3C/text%3E%3C/svg%3E"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="portfolio-updates.css">
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#03060b"><meta name="description" content="Conheça os projetos de Felipi Henriques Guimarães, engenheiro de software: HG Games, lógica em Python e sua jornada de aprendizado em nuvem AWS."><title>Felipi Guimarães — Código, projetos & possibilidades</title><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b1528'/%3E%3Ctext x='10' y='43' font-size='34' font-family='monospace' fill='%23548dff'%3Efg%3C/text%3E%3C/svg%3E"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="portfolio-updates.css">
 <style>
   .intro-screen {
     position: fixed; inset: 0; z-index: 10000;
     display: grid; place-items: center;
-    background: #06090f; color: #f2f5ff; cursor: pointer;
+    isolation: isolate; overflow: hidden; touch-action: none;
+    background: radial-gradient(ellipse at 8% 48%, #103449 0%, transparent 46%),
+      radial-gradient(ellipse at 88% 65%, #351c4b 0%, transparent 49%), #050915;
+    color: #f2f5ff; cursor: pointer;
   }
+  .intro-sky {
+    position: absolute; inset: -2%; pointer-events: none;
+    transform: translate(var(--drift-x, 0px), var(--drift-y, 0px));
+    transition: transform .22s ease-out;
+  }
+  .intro-waves, .intro-stars { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .intro-waves { animation: intro-tide 6s ease-in-out infinite alternate; }
+  @keyframes intro-tide { to { transform: translateY(2.5%) scaleY(1.06); } }
+  .intro-tech {
+    position: absolute; left: var(--x); top: var(--y); transform: translate(-50%, -50%);
+    display: grid; justify-items: center; gap: .48rem; pointer-events: auto;
+    color: #bdcfe3; font: 500 clamp(9px, 1.05vw, 13px)/1.1 ui-monospace, monospace;
+    letter-spacing: .06em; white-space: nowrap;
+    animation: intro-float 4s ease-in-out var(--phase) infinite alternate;
+  }
+  .intro-tech svg {
+    width: clamp(27px, 3.4vw, 51px); height: auto; overflow: visible;
+    filter: drop-shadow(0 0 9px color-mix(in srgb, var(--tone) 42%, transparent));
+    transition: transform .25s ease-out, filter .25s ease-out;
+  }
+  .intro-tech[data-near] svg {
+    transform: scale(1.22) rotate(-5deg);
+    filter: drop-shadow(0 0 13px var(--tone));
+  }
+  @keyframes intro-float { to { transform: translate(-50%, calc(-50% - 7px)); } }
+  .intro-glow {
+    position: absolute; left: 0; top: 0; width: 16rem; height: 16rem; pointer-events: none;
+    border-radius: 50%; background: radial-gradient(circle, #68b7ff24, transparent 70%);
+    opacity: 0; transition: opacity .2s; will-change: transform;
+  }
+  .intro-screen[data-tracking] .intro-glow { opacity: 1; }
   .intro-word {
+    position: relative; pointer-events: none; text-shadow: 0 2px 24px #050915;
     display: inline-flex; align-items: baseline; white-space: pre;
     font: 650 clamp(3rem, 9vw, 7rem)/1 system-ui, sans-serif;
     letter-spacing: -.065em;
@@ -15,19 +50,257 @@
     width: .17em; height: .17em; margin-inline-start: .075em;
     border-radius: 50%; background: #70a2ff;
   }
+  @media (max-width: 620px) {
+    .intro-tech { left: var(--mx); top: var(--my); }
+  }
   @media (prefers-reduced-motion: reduce), print {
     .intro-screen { display: none; }
   }
 </style>
 </head>
 <body>
+<!-- Technology marks: Devicon v2.17.0.
+The MIT License (MIT)
+
+Copyright (c) 2015 konpa
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
+<template id="intro-art">
+  <div class="intro-sky">
+    <svg class="intro-stars" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice" fill="#abd4fa">
+      <circle cx='282' cy='160' r='.85' opacity='.68'/>
+      <circle cx='675' cy='109' r='1.45' opacity='.43'/>
+      <circle cx='81' cy='186' r='.85' opacity='.34'/>
+      <circle cx='2' cy='467' r='1.45' opacity='.2'/>
+      <circle cx='783' cy='405' r='1.45' opacity='.34'/>
+      <circle cx='964' cy='489' r='.85' opacity='.68'/>
+      <circle cx='872' cy='509' r='1.45' opacity='.34'/>
+      <circle cx='35' cy='535' r='.85' opacity='.34'/>
+      <circle cx='139' cy='507' r='.85' opacity='.43'/>
+      <circle cx='462' cy='43' r='1.45' opacity='.43'/>
+      <circle cx='22' cy='232' r='.85' opacity='.2'/>
+      <circle cx='11' cy='112' r='.6' opacity='.2'/>
+      <circle cx='283' cy='173' r='1' opacity='.2'/>
+      <circle cx='470' cy='427' r='.6' opacity='.34'/>
+      <circle cx='8' cy='356' r='.6' opacity='.68'/>
+      <circle cx='236' cy='396' r='1' opacity='.2'/>
+      <circle cx='37' cy='478' r='.85' opacity='.2'/>
+      <circle cx='329' cy='45' r='1.45' opacity='.43'/>
+      <circle cx='809' cy='45' r='.85' opacity='.43'/>
+      <circle cx='472' cy='50' r='1.45' opacity='.43'/>
+      <circle cx='726' cy='422' r='.6' opacity='.43'/>
+      <circle cx='237' cy='104' r='.6' opacity='.34'/>
+      <circle cx='825' cy='589' r='1' opacity='.68'/>
+      <circle cx='53' cy='23' r='.85' opacity='.34'/>
+      <circle cx='788' cy='92' r='.6' opacity='.2'/>
+      <circle cx='858' cy='580' r='1.45' opacity='.2'/>
+      <circle cx='525' cy='565' r='.85' opacity='.34'/>
+      <circle cx='279' cy='266' r='1.45' opacity='.68'/>
+      <circle cx='748' cy='199' r='.6' opacity='.43'/>
+      <circle cx='622' cy='511' r='1.45' opacity='.68'/>
+      <circle cx='785' cy='541' r='.85' opacity='.34'/>
+      <circle cx='380' cy='537' r='1' opacity='.68'/>
+      <circle cx='625' cy='43' r='1.45' opacity='.34'/>
+      <circle cx='948' cy='378' r='1.45' opacity='.68'/>
+      <circle cx='790' cy='498' r='.6' opacity='.34'/>
+      <circle cx='885' cy='370' r='.6' opacity='.34'/>
+      <circle cx='989' cy='462' r='.6' opacity='.43'/>
+      <circle cx='940' cy='551' r='1' opacity='.68'/>
+      <circle cx='202' cy='163' r='.85' opacity='.68'/>
+      <circle cx='636' cy='340' r='1.45' opacity='.43'/>
+      <circle cx='285' cy='311' r='1.45' opacity='.2'/>
+      <circle cx='657' cy='405' r='1.45' opacity='.2'/>
+      <circle cx='506' cy='203' r='1' opacity='.68'/>
+      <circle cx='631' cy='394' r='1.45' opacity='.2'/>
+      <circle cx='755' cy='569' r='.85' opacity='.43'/>
+      <circle cx='776' cy='562' r='1.45' opacity='.43'/>
+      <circle cx='334' cy='510' r='.6' opacity='.43'/>
+      <circle cx='202' cy='522' r='.6' opacity='.2'/>
+      <circle cx='2' cy='355' r='.6' opacity='.34'/>
+      <circle cx='848' cy='564' r='1' opacity='.34'/>
+      <circle cx='794' cy='1' r='.6' opacity='.43'/>
+      <circle cx='177' cy='567' r='.85' opacity='.43'/>
+      <circle cx='295' cy='156' r='.6' opacity='.43'/>
+      <circle cx='209' cy='130' r='1.45' opacity='.34'/>
+      <circle cx='689' cy='37' r='1.45' opacity='.68'/>
+      <circle cx='560' cy='180' r='1.45' opacity='.43'/>
+      <circle cx='216' cy='310' r='1.45' opacity='.2'/>
+      <circle cx='648' cy='366' r='.85' opacity='.68'/>
+      <circle cx='226' cy='26' r='1.45' opacity='.68'/>
+      <circle cx='722' cy='137' r='1' opacity='.34'/>
+      <circle cx='546' cy='341' r='.85' opacity='.68'/>
+      <circle cx='671' cy='261' r='.6' opacity='.68'/>
+      <circle cx='739' cy='396' r='1' opacity='.68'/>
+      <circle cx='67' cy='550' r='1.45' opacity='.34'/>
+      <circle cx='88' cy='347' r='.85' opacity='.43'/>
+      <circle cx='157' cy='159' r='1.45' opacity='.43'/>
+      <circle cx='940' cy='230' r='.85' opacity='.2'/>
+      <circle cx='402' cy='46' r='1' opacity='.34'/>
+      <circle cx='534' cy='290' r='.85' opacity='.68'/>
+      <circle cx='921' cy='582' r='1.45' opacity='.68'/>
+      <circle cx='503' cy='2' r='.85' opacity='.68'/>
+      <circle cx='934' cy='320' r='1' opacity='.34'/>
+      <circle cx='289' cy='193' r='1' opacity='.2'/>
+      <circle cx='845' cy='520' r='.6' opacity='.34'/>
+      <circle cx='671' cy='417' r='.6' opacity='.34'/>
+      <circle cx='973' cy='509' r='.85' opacity='.43'/>
+      <circle cx='35' cy='129' r='.85' opacity='.43'/>
+      <circle cx='657' cy='457' r='1' opacity='.2'/>
+      <circle cx='615' cy='361' r='.6' opacity='.2'/>
+      <circle cx='966' cy='546' r='1' opacity='.34'/>
+      <circle cx='636' cy='91' r='1.45' opacity='.2'/>
+      <circle cx='390' cy='288' r='1' opacity='.43'/>
+      <circle cx='253' cy='587' r='.85' opacity='.2'/>
+      <circle cx='968' cy='405' r='1.45' opacity='.43'/>
+      <circle cx='623' cy='382' r='1.45' opacity='.43'/>
+      <circle cx='281' cy='98' r='1' opacity='.43'/>
+      <circle cx='749' cy='341' r='1' opacity='.2'/>
+      <circle cx='711' cy='47' r='.85' opacity='.68'/>
+      <circle cx='945' cy='357' r='1' opacity='.68'/>
+      <circle cx='973' cy='180' r='.85' opacity='.43'/>
+      <circle cx='601' cy='351' r='.85' opacity='.43'/>
+      <circle cx='443' cy='207' r='.6' opacity='.68'/>
+      <circle cx='794' cy='301' r='1' opacity='.34'/>
+      <circle cx='958' cy='18' r='.6' opacity='.34'/>
+      <circle cx='501' cy='209' r='.85' opacity='.68'/>
+      <circle cx='952' cy='222' r='1.45' opacity='.2'/>
+      <circle cx='665' cy='334' r='.85' opacity='.34'/>
+      <circle cx='23' cy='592' r='1' opacity='.34'/>
+      <circle cx='365' cy='239' r='.6' opacity='.43'/>
+      <circle cx='835' cy='583' r='.6' opacity='.34'/>
+      <circle cx='421' cy='352' r='.85' opacity='.2'/>
+      <circle cx='549' cy='590' r='1.45' opacity='.68'/>
+      <circle cx='470' cy='108' r='.85' opacity='.43'/>
+      <circle cx='969' cy='270' r='1' opacity='.2'/>
+      <circle cx='631' cy='92' r='.6' opacity='.68'/>
+      <circle cx='64' cy='465' r='1.45' opacity='.68'/>
+      <circle cx='821' cy='124' r='1.45' opacity='.43'/>
+      <circle cx='914' cy='257' r='1' opacity='.43'/>
+      <circle cx='266' cy='555' r='.85' opacity='.34'/>
+      <circle cx='922' cy='447' r='1' opacity='.43'/>
+      <circle cx='754' cy='220' r='1.45' opacity='.68'/>
+      <circle cx='667' cy='34' r='.85' opacity='.68'/>
+      <circle cx='797' cy='532' r='.6' opacity='.43'/>
+      <circle cx='959' cy='118' r='.85' opacity='.43'/>
+      <circle cx='671' cy='384' r='.85' opacity='.34'/>
+      <circle cx='19' cy='146' r='1.45' opacity='.2'/>
+      <circle cx='544' cy='474' r='.85' opacity='.2'/>
+      <circle cx='51' cy='141' r='.85' opacity='.68'/>
+      <circle cx='528' cy='198' r='.6' opacity='.43'/>
+      <circle cx='872' cy='44' r='.6' opacity='.68'/>
+      <circle cx='854' cy='29' r='1.45' opacity='.2'/>
+      <circle cx='364' cy='572' r='1' opacity='.2'/>
+      <circle cx='585' cy='451' r='1' opacity='.34'/>
+      <circle cx='359' cy='169' r='1' opacity='.43'/>
+      <circle cx='368' cy='516' r='.85' opacity='.68'/>
+      <circle cx='699' cy='185' r='1.45' opacity='.43'/>
+      <circle cx='579' cy='108' r='.6' opacity='.43'/>
+      <circle cx='65' cy='386' r='1.45' opacity='.43'/>
+      <circle cx='500' cy='372' r='.85' opacity='.68'/>
+      <circle cx='481' cy='582' r='1' opacity='.43'/>
+      <circle cx='221' cy='172' r='.85' opacity='.34'/>
+      <circle cx='543' cy='15' r='1' opacity='.2'/>
+      <circle cx='669' cy='371' r='.85' opacity='.2'/>
+      <circle cx='776' cy='158' r='.6' opacity='.43'/>
+      <circle cx='185' cy='120' r='.85' opacity='.2'/>
+      <circle cx='800' cy='564' r='.6' opacity='.68'/>
+      <circle cx='979' cy='58' r='1.45' opacity='.43'/>
+      <circle cx='794' cy='415' r='.6' opacity='.34'/>
+      <circle cx='182' cy='424' r='1' opacity='.34'/>
+      <circle cx='851' cy='339' r='.6' opacity='.43'/>
+      <circle cx='654' cy='544' r='1.45' opacity='.34'/>
+      <circle cx='315' cy='456' r='1.45' opacity='.2'/>
+      <circle cx='556' cy='565' r='1.45' opacity='.34'/>
+      <circle cx='522' cy='296' r='1.45' opacity='.34'/>
+      <circle cx='283' cy='309' r='.85' opacity='.34'/>
+    </svg>
+    <svg class="intro-waves" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" preserveAspectRatio="none" fill="none">
+      <defs>
+        <linearGradient id="intro-spectrum" x2="1" y2=".2" gradientUnits="objectBoundingBox">
+          <stop stop-color="#62f5e0"/><stop offset=".32" stop-color="#43adff"/><stop offset=".63" stop-color="#9e68ff"/><stop offset="1" stop-color="#fa85c1"/>
+        </linearGradient>
+      </defs>
+      <g stroke="url(#intro-spectrum)" stroke-width="1.25" opacity=".55">
+        <path d='M-60 486 C200 694,338 377,576 515 S924 752,1260 386'/>
+        <path d='M-60 490 C200 692,338 381,576 518 S924 749,1260 390'/>
+        <path d='M-60 494 C200 690,338 385,576 521 S924 746,1260 394'/>
+        <path d='M-60 498 C200 688,338 389,576 524 S924 743,1260 398'/>
+        <path d='M-60 502 C200 686,338 393,576 527 S924 740,1260 402'/>
+        <path d='M-60 506 C200 684,338 397,576 530 S924 737,1260 406'/>
+        <path d='M-60 510 C200 682,338 401,576 533 S924 734,1260 410'/>
+        <path d='M-60 514 C200 680,338 405,576 536 S924 731,1260 414'/>
+        <path d='M-60 518 C200 678,338 409,576 539 S924 728,1260 418'/>
+        <path d='M-60 522 C200 676,338 413,576 542 S924 725,1260 422'/>
+        <path d='M-60 526 C200 674,338 417,576 545 S924 722,1260 426'/>
+        <path d='M-60 530 C200 672,338 421,576 548 S924 719,1260 430'/>
+        <path d='M-60 534 C200 670,338 425,576 551 S924 716,1260 434'/>
+        <path d='M-60 538 C200 668,338 429,576 554 S924 713,1260 438'/>
+        <path d='M-60 542 C200 666,338 433,576 557 S924 710,1260 442'/>
+        <path d='M-60 546 C200 664,338 437,576 560 S924 707,1260 446'/>
+        <path d='M-60 550 C200 662,338 441,576 563 S924 704,1260 450'/>
+        <path d='M-60 554 C200 660,338 445,576 566 S924 701,1260 454'/>
+        <path d='M-60 558 C200 658,338 449,576 569 S924 698,1260 458'/>
+        <path d='M-60 562 C200 656,338 453,576 572 S924 695,1260 462'/>
+        <path d='M-60 566 C200 654,338 457,576 575 S924 692,1260 466'/>
+        <path d='M-60 570 C200 652,338 461,576 578 S924 689,1260 470'/>
+        <path d='M-60 574 C200 650,338 465,576 581 S924 686,1260 474'/>
+        <path d='M-60 578 C200 648,338 469,576 584 S924 683,1260 478'/>
+        <path d='M-60 582 C200 646,338 473,576 587 S924 680,1260 482'/>
+        <path d='M-60 586 C200 644,338 477,576 590 S924 677,1260 486'/>
+        <path d='M-60 590 C200 642,338 481,576 593 S924 674,1260 490'/>
+        <path d='M-60 594 C200 640,338 485,576 596 S924 671,1260 494'/>
+        <path d='M-60 598 C200 638,338 489,576 599 S924 668,1260 498'/>
+        <path d='M-60 602 C200 636,338 493,576 602 S924 665,1260 502'/>
+      </g><g stroke="url(#intro-spectrum)" stroke-width="1" opacity=".23">
+        <path d='M-50 102 C172 253,345 70,600 113 S947 51,1250 152'/>
+        <path d='M-50 106 C172 248,345 74,600 108 S947 56,1250 146'/>
+        <path d='M-50 110 C172 243,345 78,600 103 S947 61,1250 140'/>
+        <path d='M-50 114 C172 238,345 82,600 98 S947 66,1250 134'/>
+        <path d='M-50 118 C172 233,345 86,600 93 S947 71,1250 128'/>
+        <path d='M-50 122 C172 228,345 90,600 88 S947 76,1250 122'/>
+        <path d='M-50 126 C172 223,345 94,600 83 S947 81,1250 116'/>
+        <path d='M-50 130 C172 218,345 98,600 78 S947 86,1250 110'/>
+        <path d='M-50 134 C172 213,345 102,600 73 S947 91,1250 104'/>
+        <path d='M-50 138 C172 208,345 106,600 68 S947 96,1250 98'/>
+        <path d='M-50 142 C172 203,345 110,600 63 S947 101,1250 92'/>
+        <path d='M-50 146 C172 198,345 114,600 58 S947 106,1250 86'/>
+        <path d='M-50 150 C172 193,345 118,600 53 S947 111,1250 80'/>
+      </g></svg>
+    <span class='intro-tech' style='--x:12%;--y:28%;--mx:18%;--my:18%;--tone:#ff864c;--phase:-3s'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128"><path fill="#0074BD" d="M47.617 98.12s-4.767 2.774 3.397 3.71c9.892 1.13 14.947.968 25.845-1.092 0 0 2.871 1.795 6.873 3.351-24.439 10.47-55.308-.607-36.115-5.969zm-2.988-13.665s-5.348 3.959 2.823 4.805c10.567 1.091 18.91 1.18 33.354-1.6 0 0 1.993 2.025 5.132 3.131-29.542 8.64-62.446.68-41.309-6.336z"/><path fill="#EA2D2E" d="M69.802 61.271c6.025 6.935-1.58 13.17-1.58 13.17s15.289-7.891 8.269-17.777c-6.559-9.215-11.587-13.792 15.635-29.58 0 .001-42.731 10.67-22.324 34.187z"/><path fill="#0074BD" d="M102.123 108.229s3.529 2.91-3.888 5.159c-14.102 4.272-58.706 5.56-71.094.171-4.451-1.938 3.899-4.625 6.526-5.192 2.739-.593 4.303-.485 4.303-.485-4.953-3.487-32.013 6.85-13.743 9.815 49.821 8.076 90.817-3.637 77.896-9.468zM49.912 70.294s-22.686 5.389-8.033 7.348c6.188.828 18.518.638 30.011-.326 9.39-.789 18.813-2.474 18.813-2.474s-3.308 1.419-5.704 3.053c-23.042 6.061-67.544 3.238-54.731-2.958 10.832-5.239 19.644-4.643 19.644-4.643zm40.697 22.747c23.421-12.167 12.591-23.86 5.032-22.285-1.848.385-2.677.72-2.677.72s.688-1.079 2-1.543c14.953-5.255 26.451 15.503-4.823 23.725 0-.002.359-.327.468-.617z"/><path fill="#EA2D2E" d="M76.491 1.587S89.459 14.563 64.188 34.51c-20.266 16.006-4.621 25.13-.007 35.559-11.831-10.673-20.509-20.07-14.688-28.815C58.041 28.42 81.722 22.195 76.491 1.587z"/><path fill="#0074BD" d="M52.214 126.021c22.476 1.437 57-.8 57.817-11.436 0 0-1.571 4.032-18.577 7.231-19.186 3.612-42.854 3.191-56.887.874 0 .001 2.875 2.381 17.647 3.331z"/></svg><span>Java</span></span>
+    <span class='intro-tech' style='--x:35%;--y:16%;--mx:50%;--my:12%;--tone:#eccc64;--phase:-1s'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128"><linearGradient id="python-original-a" gradientUnits="userSpaceOnUse" x1="70.252" y1="1237.476" x2="170.659" y2="1151.089" gradientTransform="matrix(.563 0 0 -.568 -29.215 707.817)"><stop offset="0" stop-color="#5A9FD4"/><stop offset="1" stop-color="#306998"/></linearGradient><linearGradient id="python-original-b" gradientUnits="userSpaceOnUse" x1="209.474" y1="1098.811" x2="173.62" y2="1149.537" gradientTransform="matrix(.563 0 0 -.568 -29.215 707.817)"><stop offset="0" stop-color="#FFD43B"/><stop offset="1" stop-color="#FFE873"/></linearGradient><path fill="url(#python-original-a)" d="M63.391 1.988c-4.222.02-8.252.379-11.8 1.007-10.45 1.846-12.346 5.71-12.346 12.837v9.411h24.693v3.137H29.977c-7.176 0-13.46 4.313-15.426 12.521-2.268 9.405-2.368 15.275 0 25.096 1.755 7.311 5.947 12.519 13.124 12.519h8.491V67.234c0-8.151 7.051-15.34 15.426-15.34h24.665c6.866 0 12.346-5.654 12.346-12.548V15.833c0-6.693-5.646-11.72-12.346-12.837-4.244-.706-8.645-1.027-12.866-1.008zM50.037 9.557c2.55 0 4.634 2.117 4.634 4.721 0 2.593-2.083 4.69-4.634 4.69-2.56 0-4.633-2.097-4.633-4.69-.001-2.604 2.073-4.721 4.633-4.721z" transform="translate(0 10.26)"/><path fill="url(#python-original-b)" d="M91.682 28.38v10.966c0 8.5-7.208 15.655-15.426 15.655H51.591c-6.756 0-12.346 5.783-12.346 12.549v23.515c0 6.691 5.818 10.628 12.346 12.547 7.816 2.297 15.312 2.713 24.665 0 6.216-1.801 12.346-5.423 12.346-12.547v-9.412H63.938v-3.138h37.012c7.176 0 9.852-5.005 12.348-12.519 2.578-7.735 2.467-15.174 0-25.096-1.774-7.145-5.161-12.521-12.348-12.521h-9.268zM77.809 87.927c2.561 0 4.634 2.097 4.634 4.692 0 2.602-2.074 4.719-4.634 4.719-2.55 0-4.633-2.117-4.633-4.719 0-2.595 2.083-4.692 4.633-4.692z" transform="translate(0 10.26)"/><radialGradient id="python-original-c" cx="1825.678" cy="444.45" r="26.743" gradientTransform="matrix(0 -.24 -1.055 0 532.979 557.576)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#B8B8B8" stop-opacity=".498"/><stop offset="1" stop-color="#7F7F7F" stop-opacity="0"/></radialGradient><path opacity=".444" fill="url(#python-original-c)" d="M97.309 119.597c0 3.543-14.816 6.416-33.091 6.416-18.276 0-33.092-2.873-33.092-6.416 0-3.544 14.815-6.417 33.092-6.417 18.275 0 33.091 2.872 33.091 6.417z"/></svg><span>Python</span></span>
+    <span class='intro-tech' style='--x:64%;--y:19%;--mx:80%;--my:20%;--tone:#f57258;--phase:-5s'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128"><path fill="#F34F29" d="M124.737 58.378L69.621 3.264c-3.172-3.174-8.32-3.174-11.497 0L46.68 14.71l14.518 14.518c3.375-1.139 7.243-.375 9.932 2.314 2.703 2.706 3.461 6.607 2.294 9.993l13.992 13.993c3.385-1.167 7.292-.413 9.994 2.295 3.78 3.777 3.78 9.9 0 13.679a9.673 9.673 0 01-13.683 0 9.677 9.677 0 01-2.105-10.521L68.574 47.933l-.002 34.341a9.708 9.708 0 012.559 1.828c3.778 3.777 3.778 9.898 0 13.683-3.779 3.777-9.904 3.777-13.679 0-3.778-3.784-3.778-9.905 0-13.683a9.65 9.65 0 013.167-2.11V47.333a9.581 9.581 0 01-3.167-2.111c-2.862-2.86-3.551-7.06-2.083-10.576L41.056 20.333 3.264 58.123a8.133 8.133 0 000 11.5l55.117 55.114c3.174 3.174 8.32 3.174 11.499 0l54.858-54.858a8.135 8.135 0 00-.001-11.501z"/></svg><span>Git</span></span>
+    <span class='intro-tech' style='--x:85%;--y:30%;--mx:83%;--my:37%;--tone:#acb8fa;--phase:-1s'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128"><g fill="#e4e9ff"><path fill-rule="evenodd" clip-rule="evenodd" d="M64 5.103c-33.347 0-60.388 27.035-60.388 60.388 0 26.682 17.303 49.317 41.297 57.303 3.017.56 4.125-1.31 4.125-2.905 0-1.44-.056-6.197-.082-11.243-16.8 3.653-20.345-7.125-20.345-7.125-2.747-6.98-6.705-8.836-6.705-8.836-5.48-3.748.413-3.67.413-3.67 6.063.425 9.257 6.223 9.257 6.223 5.386 9.23 14.127 6.562 17.573 5.02.542-3.903 2.107-6.568 3.834-8.076-13.413-1.525-27.514-6.704-27.514-29.843 0-6.593 2.36-11.98 6.223-16.21-.628-1.52-2.695-7.662.584-15.98 0 0 5.07-1.623 16.61 6.19C53.7 35 58.867 34.327 64 34.304c5.13.023 10.3.694 15.127 2.033 11.526-7.813 16.59-6.19 16.59-6.19 3.287 8.317 1.22 14.46.593 15.98 3.872 4.23 6.215 9.617 6.215 16.21 0 23.194-14.127 28.3-27.574 29.796 2.167 1.874 4.097 5.55 4.097 11.183 0 8.08-.07 14.583-.07 16.572 0 1.607 1.088 3.49 4.148 2.897 23.98-7.994 41.263-30.622 41.263-57.294C124.388 32.14 97.35 5.104 64 5.104z"/><path d="M26.484 91.806c-.133.3-.605.39-1.035.185-.44-.196-.685-.605-.543-.906.13-.31.603-.395 1.04-.188.44.197.69.61.537.91zm2.446 2.729c-.287.267-.85.143-1.232-.28-.396-.42-.47-.983-.177-1.254.298-.266.844-.14 1.24.28.394.426.472.984.17 1.255zM31.312 98.012c-.37.258-.976.017-1.35-.52-.37-.538-.37-1.183.01-1.44.373-.258.97-.025 1.35.507.368.545.368 1.19-.01 1.452zm3.261 3.361c-.33.365-1.036.267-1.552-.23-.527-.487-.674-1.18-.343-1.544.336-.366 1.045-.264 1.564.23.527.486.686 1.18.333 1.543zm4.5 1.951c-.147.473-.825.688-1.51.486-.683-.207-1.13-.76-.99-1.238.14-.477.823-.7 1.512-.485.683.206 1.13.756.988 1.237zm4.943.361c.017.498-.563.91-1.28.92-.723.017-1.308-.387-1.315-.877 0-.503.568-.91 1.29-.924.717-.013 1.306.387 1.306.88zm4.598-.782c.086.485-.413.984-1.126 1.117-.7.13-1.35-.172-1.44-.653-.086-.498.422-.997 1.122-1.126.714-.123 1.354.17 1.444.663zm0 0"/></g></svg><span>GitHub</span></span>
+    <span class='intro-tech' style='--x:89%;--y:65%;--mx:81%;--my:68%;--tone:#c194ff;--phase:-5s'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="#d6b3ff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path fill="#382253" d="M24 5C13 5 6 12 6 23c0 6 3 10 8 12v6h20v-6c5-2 8-6 8-12C42 12 35 5 24 5Z"/><path d="m16 15 7 4 8-7m-8 7v5m-3 17v-5m7 5v-5"/><g fill="#bff8ff" stroke="none"><circle cx="16" cy="15" r="2.5"/><circle cx="31" cy="12" r="2.5"/><circle cx="23" cy="19" r="2.5"/></g><path fill="#171224" d="M12 25q4-3 8 1-1 6-5 5-4-1-3-6Zm24 0q-4-3-8 1 1 6 5 5 4-1 3-6Z"/><path d="m22 33 2-3 2 3"/></svg><span>I.A.</span></span>
+    <span class='intro-tech' style='--x:69%;--y:79%;--mx:69%;--my:85%;--tone:#6cd8ed;--phase:-5s'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128"><path fill="#72d6ed" d="M117.688 98.242c-6.973-.191-12.297.461-16.852 2.379-1.293.547-3.355.559-3.566 2.18.711.746.82 1.859 1.387 2.777 1.086 1.754 2.922 4.113 4.559 5.352 1.789 1.348 3.633 2.793 5.551 3.961 3.414 2.082 7.223 3.27 10.504 5.352 1.938 1.23 3.859 2.777 5.75 4.164.934.684 1.563 1.75 2.773 2.18v-.195c-.637-.812-.801-1.93-1.387-2.777l-2.578-2.578c-2.52-3.344-5.719-6.281-9.117-8.719-2.711-1.949-8.781-4.578-9.91-7.73l-.199-.199c1.922-.219 4.172-.914 5.949-1.391 2.98-.797 5.645-.59 8.719-1.387l4.164-1.187v-.793c-1.555-1.594-2.664-3.707-4.359-5.152-4.441-3.781-9.285-7.555-14.273-10.703-2.766-1.746-6.184-2.883-9.117-4.363-.988-.496-2.719-.758-3.371-1.586-1.539-1.961-2.379-4.449-3.566-6.738-2.488-4.793-4.93-10.023-7.137-15.066-1.504-3.437-2.484-6.828-4.359-9.91-9-14.797-18.687-23.73-33.695-32.508-3.195-1.867-7.039-2.605-11.102-3.57l-6.543-.395c-1.332-.555-2.715-2.184-3.965-2.977C16.977 3.52 4.223-3.312.539 5.672-1.785 11.34 4.016 16.871 6.09 19.746c1.457 2.012 3.32 4.273 4.359 6.539.688 1.492.805 2.984 1.391 4.559 1.438 3.883 2.695 8.109 4.559 11.695.941 1.816 1.98 3.727 3.172 5.352.727.996 1.98 1.438 2.18 2.973-1.227 1.715-1.297 4.375-1.984 6.543-3.098 9.77-1.926 21.91 2.578 29.137 1.383 2.223 4.641 6.98 9.117 5.156 3.918-1.598 3.043-6.539 4.164-10.902.254-.988.098-1.715.594-2.379v.199l3.57 7.133c2.641 4.254 7.324 8.699 11.297 11.699 2.059 1.555 3.68 4.242 6.344 5.152v-.199h-.199c-.516-.805-1.324-1.137-1.98-1.781-1.551-1.523-3.277-3.414-4.559-5.156-3.613-4.902-6.805-10.27-9.711-15.855-1.391-2.668-2.598-5.609-3.77-8.324-.453-1.047-.445-2.633-1.387-3.172-1.281 1.988-3.172 3.598-4.164 5.945-1.582 3.754-1.789 8.336-2.375 13.082-.348.125-.195.039-.398.199-2.762-.668-3.73-3.508-4.758-5.949-2.594-6.164-3.078-16.09-.793-23.191.59-1.836 3.262-7.617 2.18-9.316-.516-1.691-2.219-2.672-3.172-3.965-1.18-1.598-2.355-3.703-3.172-5.551-2.125-4.805-3.113-10.203-5.352-15.062-1.07-2.324-2.875-4.676-4.359-6.738-1.645-2.289-3.484-3.977-4.758-6.742-.453-.984-1.066-2.559-.398-3.566.215-.684.516-.969 1.191-1.191 1.148-.887 4.352.297 5.547.793 3.18 1.32 5.832 2.578 8.527 4.363 1.289.855 2.598 2.512 4.16 2.973h1.785c2.789.641 5.914.195 8.523.988 4.609 1.402 8.738 3.582 12.488 5.949 11.422 7.215 20.766 17.48 27.156 29.734 1.027 1.973 1.473 3.852 2.379 5.945 1.824 4.219 4.125 8.559 5.941 12.688 1.816 4.113 3.582 8.27 6.148 11.695 1.348 1.801 6.551 2.766 8.918 3.766 1.66.699 4.379 1.43 5.949 2.379 3 1.809 5.906 3.965 8.723 5.945 1.402.992 5.73 3.168 5.945 4.957zm-88.605-75.52c-1.453-.027-2.48.156-3.566.395v.199h.195c.695 1.422 1.918 2.34 2.777 3.566l1.98 4.164.199-.195c1.227-.867 1.789-2.25 1.781-4.363-.492-.52-.562-1.164-.992-1.785-.562-.824-1.66-1.289-2.375-1.98zm0 0"/></svg><span>MySQL</span></span>
+    <span class='intro-tech' style='--x:47%;--y:76%;--mx:34%;--my:87%;--tone:#ffe069;--phase:-3s'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128"><path fill="#F0DB4F" d="M1.408 1.408h125.184v125.185H1.408z"/><path fill="#323330" d="M116.347 96.736c-.917-5.711-4.641-10.508-15.672-14.981-3.832-1.761-8.104-3.022-9.377-5.926-.452-1.69-.512-2.642-.226-3.665.821-3.32 4.784-4.355 7.925-3.403 2.023.678 3.938 2.237 5.093 4.724 5.402-3.498 5.391-3.475 9.163-5.879-1.381-2.141-2.118-3.129-3.022-4.045-3.249-3.629-7.676-5.498-14.756-5.355l-3.688.477c-3.534.893-6.902 2.748-8.877 5.235-5.926 6.724-4.236 18.492 2.975 23.335 7.104 5.332 17.54 6.545 18.873 11.531 1.297 6.104-4.486 8.08-10.234 7.378-4.236-.881-6.592-3.034-9.139-6.949-4.688 2.713-4.688 2.713-9.508 5.485 1.143 2.499 2.344 3.63 4.26 5.795 9.068 9.198 31.76 8.746 35.83-5.176.165-.478 1.261-3.666.38-8.581zM69.462 58.943H57.753l-.048 30.272c0 6.438.333 12.34-.714 14.149-1.713 3.558-6.152 3.117-8.175 2.427-2.059-1.012-3.106-2.451-4.319-4.485-.333-.584-.583-1.036-.667-1.071l-9.52 5.83c1.583 3.249 3.915 6.069 6.902 7.901 4.462 2.678 10.459 3.499 16.731 2.059 4.082-1.189 7.604-3.652 9.448-7.401 2.666-4.915 2.094-10.864 2.07-17.444.06-10.735.001-21.468.001-32.237z"/></svg><span>JavaScript</span></span>
+    <span class='intro-tech' style='--x:24%;--y:78%;--mx:16%;--my:69%;--tone:#ff9575;--phase:-5s'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128"><path fill="#E44D26" d="M19.037 113.876L9.032 1.661h109.936l-10.016 112.198-45.019 12.48z"/><path fill="#F16529" d="M64 116.8l36.378-10.086 8.559-95.878H64z"/><path fill="#EBEBEB" d="M64 52.455H45.788L44.53 38.361H64V24.599H29.489l.33 3.692 3.382 37.927H64zm0 35.743l-.061.017-15.327-4.14-.979-10.975H33.816l1.928 21.609 28.193 7.826.063-.017z"/><path fill="#fff" d="M63.952 52.455v13.763h16.947l-1.597 17.849-15.35 4.143v14.319l28.215-7.82.207-2.325 3.234-36.233.335-3.696h-3.708zm0-27.856v13.762h33.244l.276-3.092.628-6.978.329-3.692z"/></svg><span>HTML</span></span>
+    <span class='intro-tech' style='--x:10%;--y:61%;--mx:15%;--my:37%;--tone:#68bcff;--phase:-1s'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128"><path fill="#1572B6" d="M18.814 114.123L8.76 1.352h110.48l-10.064 112.754-45.243 12.543-45.119-12.526z"/><path fill="#33A9DC" d="M64.001 117.062l36.559-10.136 8.601-96.354h-45.16v106.49z"/><path fill="#fff" d="M64.001 51.429h18.302l1.264-14.163H64.001V23.435h34.682l-.332 3.711-3.4 38.114h-30.95V51.429z"/><path fill="#EBEBEB" d="M64.083 87.349l-.061.018-15.403-4.159-.985-11.031H33.752l1.937 21.717 28.331 7.863.063-.018v-14.39z"/><path fill="#fff" d="M81.127 64.675l-1.666 18.522-15.426 4.164v14.39l28.354-7.858.208-2.337 2.406-26.881H81.127z"/><path fill="#EBEBEB" d="M64.048 23.435v13.831H30.64l-.277-3.108-.63-7.012-.331-3.711h34.646zm-.047 27.996v13.831H48.792l-.277-3.108-.631-7.012-.33-3.711h16.447z"/></svg><span>CSS</span></span>
+  </div>
+</template>
+
 <script>
 (() => {
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
   if (motion.matches || location.hash || !Element.prototype.animate) return;
   try {
-    if (sessionStorage.getItem('felipi-intro-seen')) return;
-    sessionStorage.setItem('felipi-intro-seen', '1');
+    if (sessionStorage.getItem('felipi-intro-sky-seen')) return;
+    sessionStorage.setItem('felipi-intro-sky-seen', '1');
   } catch { /* The opening also works when storage is unavailable. */ }
 
   const screen = document.createElement('div');
@@ -44,7 +317,10 @@
   const point = document.createElement('span');
   point.className = 'intro-point';
   word.append(point);
-  screen.append(word);
+  const sky = document.getElementById('intro-art').content.firstElementChild.cloneNode(true);
+  const glow = document.createElement('div');
+  glow.className = 'intro-glow';
+  screen.append(sky, glow, word);
   document.body.prepend(screen);
 
   const events = new AbortController();
@@ -53,9 +329,40 @@
     events.abort();
     screen.remove();
   }
-  const deadline = setTimeout(finish, 2600);
+  const deadline = setTimeout(finish, 4100);
   const options = { signal: events.signal };
-  screen.addEventListener('click', finish, options);
+  let press = null;
+  let dragged = false;
+  let highlighted = null;
+  function trackPointer(event) {
+    const { clientX: x, clientY: y } = event;
+    if (press && Math.hypot(x - press.x, y - press.y) > 8) dragged = true;
+    screen.dataset.tracking = '';
+    sky.style.setProperty('--drift-x', ((x / innerWidth - .5) * 22) + 'px');
+    sky.style.setProperty('--drift-y', ((y / innerHeight - .5) * 18) + 'px');
+    glow.style.transform = 'translate(' + x + 'px,' + y + 'px) translate(-50%,-50%)';
+    const hovered = document.elementFromPoint(x, y)?.closest('.intro-tech');
+    if (highlighted !== hovered) {
+      highlighted?.removeAttribute('data-near');
+      hovered?.setAttribute('data-near', '');
+      highlighted = hovered;
+    }
+  }
+  screen.addEventListener('pointermove', trackPointer, options);
+  screen.addEventListener('pointerdown', event => {
+    press = { x: event.clientX, y: event.clientY };
+    dragged = false;
+    trackPointer(event);
+  }, options);
+  screen.addEventListener('pointerup', () => { press = null; }, options);
+  screen.addEventListener('pointerleave', () => {
+    delete screen.dataset.tracking;
+    highlighted?.removeAttribute('data-near');
+    highlighted = null;
+    sky.style.removeProperty('--drift-x');
+    sky.style.removeProperty('--drift-y');
+  }, options);
+  screen.addEventListener('click', () => { if (!dragged) finish(); }, options);
   window.addEventListener('keydown', finish, options);
   window.addEventListener('pagehide', finish, options);
   motion.addEventListener('change', finish, options);
@@ -71,17 +378,17 @@
     { transform: 'scale(0)' }, { transform: 'scale(1.22)', offset: .72 }, { transform: 'scale(1)' }
   ], { duration: 350, delay: 750, fill: 'backwards' });
   word.animate([{ opacity: 1 }, { opacity: 0, filter: 'blur(6px)' }],
-    { duration: 340, delay: 1400, fill: 'forwards' });
+    { duration: 340, delay: 2850, fill: 'forwards' });
 
   const dot = point.getBoundingClientRect();
   const center = ' at ' + (dot.left + dot.width / 2) + 'px ' + (dot.top + dot.height / 2) + 'px)';
   screen.animate([{ clipPath: 'circle(150%' + center }, { clipPath: 'circle(0%' + center }],
-    { duration: 680, delay: 1420, easing: 'cubic-bezier(.6,0,.8,.35)', fill: 'forwards' }
+    { duration: 680, delay: 2870, easing: 'cubic-bezier(.6,0,.8,.35)', fill: 'forwards' }
   ).onfinish = finish;
 })();
 </script>
 <a class="skip-link" href="#projetos">Ir para os projetos</a><div class="page-glow" aria-hidden="true"></div><header class="header"><a class="brand" href="#inicio" aria-label="Felipi Guimarães, início"><span class="brand-symbol">f<span>g</span><b>_</b></span><span class="brand-name">FELIPI GUIMARÃES<small>PERSONAL PORTFOLIO</small></span></a><button id="menu-button" aria-label="Abrir menu" aria-expanded="false" aria-controls="main-nav">☰</button><nav id="main-nav" aria-label="Navegação principal"><a href="#projetos">Projetos</a><a href="#sobre">Sobre mim</a><a href="#conhecimentos">Conhecimentos</a></nav><button id="search-button" aria-label="Buscar projetos e seções">Buscar <kbd>Ctrl K</kbd></button><a class="header-cta" href="https://www.linkedin.com/feed/update/urn:li:activity:7510793193815420928/" target="_blank" rel="noopener noreferrer">Meu LinkedIn ↗</a></header>
-<main><section class="hero wrap" id="inicio"><div class="hero-copy"><p class="eyebrow"><span class="live-dot"></span> ESTUDANTE DE ENGENHARIA DE SOFTWARE</p><h1>Ideias em código.<br>Projetos com<br><span>identidade.</span></h1><p class="hero-intro">Eu sou <strong>Felipi Henriques Guimarães.</strong><br>Sou estudante de Engenharia de Software. Aqui compartilho meus projetos, experiências e aprendizados em tecnologia.</p><div class="hero-actions"><a class="button button-primary" href="#projetos">Explore meus projetos <span>↗</span></a><a class="button button-quiet" href="#sobre">Conheça minha história ↓</a></div><div class="hero-tags"><span>DESENVOLVIMENTO</span><i>+</i><span>PYTHON</span><i>+</i><span>CLOUD</span></div></div><div class="hero-visual"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="visual-grid"></div><span class="floating-code code-one" aria-hidden="true">&lt;hello world /&gt;</span><span class="floating-code code-two" aria-hidden="true">{ build. learn. repeat. }</span><div id="character-stage"><div id="character-figure"><img id="character-front" data-character-image="front" src="assets/felipi-mascot.png" width="1280" height="1280" decoding="async" alt="Mascote de desenho animado de Felipi, sorrindo e acenando com um notebook no colo" fetchpriority="high"><img id="character-profile" data-character-image="profile" src="assets/felipi-profile.png" width="1280" height="1280" decoding="async" alt="Mascote de Felipi visto de perfil, sentado com o notebook" hidden><img id="character-back" data-character-image="back" src="assets/felipi-back.png" width="1280" height="1280" decoding="async" alt="Mascote de Felipi visto de costas, com moletom azul e notebook" hidden></div></div><div class="character-bubble"><span class="live-dot"></span><span id="character-message">Mova o mouse para explorar os ângulos.</span></div><span class="avatar-caption">FELIPI / DIGITAL EDITION</span></div><div class="hero-baseline"><span>APRENDER. CONSTRUIR. EVOLUIR.</span><a href="#projetos">MINHA JORNADA EM PROJETOS <span>↓</span></a><button id="motion-button" aria-pressed="false">Pausar movimento</button></div></section>
+<main><section class="hero wrap" id="inicio"><div class="hero-copy"><p class="eyebrow"><span class="live-dot"></span> ENGENHEIRO DE SOFTWARE</p><h1>Ideias em código.<br>Projetos com<br><span>identidade.</span></h1><p class="hero-intro">Eu sou <strong>Felipi Henriques Guimarães.</strong><br>Aqui compartilho os sistemas que desenvolvo, os processos que automatizo e as decisões por trás de cada projeto.</p><div class="hero-actions"><a class="button button-primary" href="#projetos">Explore meus projetos <span>↗</span></a><a class="button button-quiet" href="#sobre">Conheça minha história ↓</a></div><div class="hero-tags"><span>DESENVOLVIMENTO</span><i>+</i><span>PYTHON</span><i>+</i><span>CLOUD</span></div></div><div class="hero-visual"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="visual-grid"></div><span class="floating-code code-one" aria-hidden="true">&lt;hello world /&gt;</span><span class="floating-code code-two" aria-hidden="true">{ build. learn. repeat. }</span><div id="character-stage"><div id="character-figure"><img id="character-front" data-character-image="front" src="assets/felipi-mascot.png" width="1280" height="1280" decoding="async" alt="Mascote de desenho animado de Felipi, sorrindo e acenando com um notebook no colo" fetchpriority="high"><img id="character-profile" data-character-image="profile" src="assets/felipi-profile.png" width="1280" height="1280" decoding="async" alt="Mascote de Felipi visto de perfil, sentado com o notebook" hidden><img id="character-back" data-character-image="back" src="assets/felipi-back.png" width="1280" height="1280" decoding="async" alt="Mascote de Felipi visto de costas, com moletom azul e notebook" hidden></div></div><div class="character-bubble"><span class="live-dot"></span><span id="character-message">Mova o mouse para explorar os ângulos.</span></div><span class="avatar-caption">FELIPI / DIGITAL EDITION</span></div><div class="hero-baseline"><span>APRENDER. CONSTRUIR. EVOLUIR.</span><a href="#projetos">MINHA JORNADA EM PROJETOS <span>↓</span></a><button id="motion-button" aria-pressed="false">Pausar movimento</button></div></section>
 <section id="projetos" class="work-section wrap"><div class="section-heading"><p class="eyebrow">01 / DA IDEIA À PRÁTICA</p><h2>Cada projeto,<br><span>um próximo nível.</span></h2><p>Uma jornada que conecta desenvolvimento web,<br class="desktop"> processos, interfaces, programação e computação em nuvem.</p></div><div class="filter-row"><div class="filters" role="group" aria-label="Filtrar projetos"><button class="active" data-filter="all" aria-pressed="true">Todos</button><button data-filter="web" aria-pressed="false">Web</button><button data-filter="learning" aria-pressed="false">Aprendizado</button></div><span id="project-count" aria-live="polite">6 itens</span></div><div class="journey-layout"><aside class="journey-rail" aria-label="Trilha de projetos"><div class="rail-top">UM PASSO DE CADA VEZ <span>↗</span></div><svg viewBox="0 0 400 770" fill="none" aria-hidden="true"><defs><linearGradient id="beam" x1="200" y1="0" x2="200" y2="770" gradientUnits="userSpaceOnUse"><stop stop-color="#3978ff" stop-opacity=".18"/><stop offset="1" stop-color="#3978ff" stop-opacity="0"/></linearGradient><linearGradient id="road" x1="210" y1="60" x2="210" y2="730" gradientUnits="userSpaceOnUse"><stop stop-color="#9ac4ff"/><stop offset=".6" stop-color="#3579ff"/><stop offset="1" stop-color="#122748"/></linearGradient></defs><path d="M200 50L385 770H15L200 50Z" fill="url(#beam)" stroke="#183256"/><path d="M200 50C130 125 290 150 210 240S80 325 200 390S315 480 200 550S90 650 200 740" stroke="#3b7aff" stroke-opacity=".15" stroke-width="15"/><path id="journey-path" d="M200 50C130 125 290 150 210 240S80 325 200 390S315 480 200 550S90 650 200 740" stroke="url(#road)" stroke-width="3"/><g fill="#102b57" stroke="#649fff" stroke-width="2"><circle cx="200" cy="50" r="6" fill="#a9d3ff"/><circle cx="210" cy="240" r="5"/><circle cx="200" cy="390" r="5"/><circle cx="200" cy="550" r="5"/><circle cx="200" cy="740" r="5"/></g><g stroke="#3765a1" stroke-opacity=".14"><path d="M150 250Q200 275 250 250"/><path d="M110 400Q200 450 290 400"/><path d="M70 560Q200 635 330 560"/></g><g id="journey-light" aria-hidden="true"><circle r="17" fill="#548dff" opacity=".15"/><circle r="8" fill="#8ebeff" opacity=".4"/><circle r="4" fill="#eff8ff"/></g></svg><button class="journey-stop journey-position-1 active" data-journey="hg-games" aria-current="step"><i></i><span><small>01 / CONSTRUIR</small>HG Games</span></button><button class="journey-stop journey-position-2" data-journey="marketplace-project"><i></i><span><small>02 / TRANSFORMAR</small>Marketplace</span></button><button class="journey-stop journey-position-3" data-journey="python-project"><i></i><span><small>03 / MAPEAR</small>Fluxograma</span></button><button class="journey-stop journey-position-4" data-journey="flow-code-project"><i></i><span><small>04 / DESENVOLVER</small>Fluxograma + Código</span></button><button class="journey-stop journey-position-5" data-journey="voa-mundo-project"><i></i><span><small>05 / DESENHAR</small>Voa Mundo</span></button><button class="journey-stop journey-position-6" data-journey="formacao"><i></i><span><small>06 / EXPLORAR</small>Cloud & AWS</span></button><div class="rail-bottom"><span class="live-dot"></span> A PRÓXIMA ETAPA ESTÁ EM CONSTRUÇÃO</div></aside>
 <div class="project-list"><article class="project-card" id="hg-games" data-category="web"><div class="panel-top"><span>PROJETO 01</span><span><i class="live-dot"></i> WEB</span></div><a class="project-cover game-cover" href="https://hggames-site.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Abrir o site HG Games"><div class="game-grid"></div><div class="game-orb"></div><span class="cover-overline">ENTRE NO UNIVERSO</span><div class="game-title"><span>HG</span> GAMES<span class="pixel-dot">■</span></div><div class="game-bottom"><span>PROJETO WEB PARA CLIENTE</span><span class="round-arrow">↗</span></div><span class="cover-caption">CAPA CONCEITUAL</span></a><div class="project-content"><div class="project-title-row"><h3>HG Games</h3><span class="index">/01</span></div><p>Projeto web desenvolvido para um cliente. Acesse o HG Games e conheça o trabalho.</p><div class="tags"><span>PROJETO PARA CLIENTE</span><span>WEB</span></div><a class="project-link" href="https://hggames-site.vercel.app/" target="_blank" rel="noopener noreferrer">Explorar projeto <span>↗</span></a><a class="project-link linkedin-project" href="https://www.linkedin.com/feed/update/urn:li:activity:7507883123452547073/" target="_blank" rel="noopener noreferrer">Ver publicação no LinkedIn <span>↗</span></a></div></article>
 <article class="project-card" id="marketplace-project" data-category="web"><div class="panel-top"><span>ESTUDO DE CASO</span><span>MARKETPLACE DIGITAL</span></div><div class="project-cover marketplace-cover"><img src="assets/marketplace-solution.png" alt="Prévia da solução de marketplace desenvolvida para um cliente" width="1909" height="927" loading="lazy" decoding="async"><span class="marketplace-cover-label">AS IS <span>→</span> TO BE</span></div><div class="project-content"><div class="project-title-row"><h3>Marketplace Digital</h3><span class="index">/02</span></div><p>Da referência inicial a uma solução própria. Um projeto para cliente com foco em automação, experiência do usuário e uma estrutura preparada para evoluir.</p><div class="tags"><span>PROJETO PARA CLIENTE</span><span>UX/UI</span><span>AUTOMAÇÃO</span></div><details class="project-story" id="marketplace-details">
@@ -128,14 +435,14 @@
 <section class="about-section about-expanded wrap" id="sobre" aria-labelledby="about-title">
   <div class="about-portrait">
     <img src="assets/felipi-photo.jpg" width="400" height="400" loading="lazy" decoding="async" alt="Foto de Felipi Henriques Guimarães">
-    <div class="portrait-caption"><span>POR TRÁS DO CÓDIGO</span><strong>Felipi H. Guimarães</strong><p class="portrait-detail">21 anos · Estudante de Engenharia de Software</p></div>
+    <div class="portrait-caption"><span>POR TRÁS DO CÓDIGO</span><strong>Felipi H. Guimarães</strong><p class="portrait-detail">21 anos · Engenheiro de Software</p></div>
     <div class="portrait-corner" aria-hidden="true">+</div>
     <ul class="about-strengths" aria-label="Habilidades profissionais"><li>Liderança</li><li>Gestão de equipes</li><li>Resolução de problemas</li><li>Otimização de processos</li></ul>
   </div>
   <div class="about-copy">
     <p class="eyebrow">02 / MINHA HISTÓRIA</p>
     <h2 id="about-title">Sobre mim <span aria-hidden="true">👨‍💻</span></h2>
-    <p>Olá! Me chamo <strong>Felipi</strong>, tenho 21 anos e atualmente sou estudante de <strong>Engenharia de Software</strong>, apaixonado por tecnologia, inovação e pelo poder que a programação tem de transformar ideias em soluções reais.</p>
+    <p>Olá! Me chamo <strong>Felipi</strong>, tenho 21 anos e sou <strong>Engenheiro de Software</strong>, apaixonado por tecnologia, inovação e pelo poder que a programação tem de transformar ideias em soluções reais.</p>
     <p>Minha trajetória profissional começou no setor de atendimento, onde conquistei a oportunidade de crescer e assumir o cargo de <strong>Supervisor Operacional em uma das maiores empresas do segmento de Call Center</strong>. Essa experiência me proporcionou o desenvolvimento de habilidades essenciais, como liderança, pensamento estratégico, resolução de problemas, gestão de equipes e otimização de processos.</p>
     <p>Ao longo dessa jornada, descobri minha verdadeira paixão pela tecnologia e passei a aprofundar meus conhecimentos em <strong>linguagens de programação, Análise e Desenvolvimento de Sistemas e automação de processos</strong>.</p>
     <p>Atualmente, meu principal foco está na <strong>criação de soluções tecnológicas, desenvolvimento de projetos de automação e construção de sistemas escaláveis</strong>, buscando sempre unir eficiência, inovação e inteligência para solucionar desafios do mundo real.</p>

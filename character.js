@@ -27,7 +27,7 @@
   document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelAnimationFrame(frame);frame=0;drag=null;}});select(0);scale(0);
 
   const message=document.getElementById('character-message');
-  const phrases=['Olá! Eu sou o Felipi.','Estudo Engenharia de Software.','Gosto de transformar ideias em projetos.','Explore meus projetos logo abaixo!'];
+  const phrases=['Olá! Eu sou o Felipi.','Sou engenheiro de software.','Gosto de transformar ideias em projetos.','Explore meus projetos logo abaixo!'];
   if(message){message.setAttribute('role','status');message.setAttribute('aria-live','polite');}
   function speak(){if(message)message.textContent=phrases[messageIndex++%phrases.length];}
   button('Conversar',speak,'Mostrar mensagem do mascote');
