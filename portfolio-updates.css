@@ -56,3 +56,20 @@
 #conhecimentos .skill-card { flex: 0 0 min(82%, 340px); min-width: 0; scroll-snap-align: start; }
 #conhecimentos .skills-grid:focus-visible { outline: 2px solid #8db9ff; outline-offset: 4px; }
 @media print { #conhecimentos .skills-grid { display: grid; overflow: visible; } }
+
+@keyframes portfolio-entrada { from { opacity: .35; translate: 0 16px; } to { opacity: 1; translate: 0 0; } }
+@keyframes portfolio-luz { from { translate: -3% 2%; scale: .96; } to { translate: 3% -2%; scale: 1.05; } }
+@keyframes portfolio-flutuar { from { translate: 0 3px; } to { translate: 2px -5px; } }
+@media screen and (prefers-reduced-motion: no-preference) {
+  body:not(.reduced-motion) .hero-copy > * { animation: portfolio-entrada .68s cubic-bezier(.2,.7,.2,1) backwards; }
+  .hero-copy > :nth-child(2) { animation-delay: 70ms !important; }
+  .hero-copy > :nth-child(3) { animation-delay: 140ms !important; }
+  .hero-copy > :nth-child(4) { animation-delay: 210ms !important; }
+  .hero-copy > :nth-child(5) { animation-delay: 280ms !important; }
+  body:not(.reduced-motion) .hero-visual::before { animation: portfolio-luz 15s ease-in-out infinite alternate; }
+  body:not(.reduced-motion) .floating-code { animation: portfolio-flutuar 4s ease-in-out infinite alternate; }
+  body:not(.reduced-motion) .code-two { animation-direction: alternate-reverse; }
+  @supports (animation-timeline: view()) {
+    body:not(.reduced-motion) :is(.timeline-content, .project-cover, .project-card [data-enlarge]) { animation: portfolio-entrada linear both; animation-timeline: view(); animation-range: entry 0% entry 80%; }
+  }
+}
