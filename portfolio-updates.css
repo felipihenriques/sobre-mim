@@ -73,3 +73,18 @@
     body:not(.reduced-motion) :is(.timeline-content, .project-cover, .project-card [data-enlarge]) { animation: portfolio-entrada linear both; animation-timeline: view(); animation-range: entry 0% entry 80%; }
   }
 }
+
+@keyframes leitura { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@supports (animation-timeline: scroll()) {
+  @media screen and (prefers-reduced-motion: no-preference) {
+    body:not(.reduced-motion)::before { content: ''; position: fixed; inset: 0 0 auto; height: 3px; z-index: 1000; pointer-events: none; transform-origin: left; background: linear-gradient(90deg,#5588ff,#7be5ff); animation: leitura linear both; animation-timeline: scroll(root block); }
+  }
+}
+.project-card :is(.project-cover,.project-image)::after { content: ''; position: absolute; inset: 0; pointer-events: none; box-shadow: inset 0 0 0 2px #8bbcff; border-radius: inherit; opacity: 0; background: linear-gradient(112deg,transparent 35%,#9bcaff20 50%,transparent 65%) 130% 0 / 350% 100% no-repeat; }
+.project-card:focus-within :is(.project-cover,.project-image)::after { opacity: 1; }
+@media (hover:hover) { .project-card:hover :is(.project-cover,.project-image)::after { opacity: 1; } }
+@media screen and (prefers-reduced-motion: no-preference) {
+  body:not(.reduced-motion) .project-card :is(.project-cover,.project-image)::after { transition: opacity .2s ease, background-position .8s ease; }
+  body:not(.reduced-motion) .project-card:focus-within :is(.project-cover,.project-image)::after { background-position: -30% 0; }
+  @media (hover:hover) { body:not(.reduced-motion) .project-card:hover :is(.project-cover,.project-image)::after { background-position: -30% 0; } }
+}
