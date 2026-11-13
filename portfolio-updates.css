@@ -88,3 +88,92 @@
   body:not(.reduced-motion) .project-card:focus-within :is(.project-cover,.project-image)::after { background-position: -30% 0; }
   @media (hover:hover) { body:not(.reduced-motion) .project-card:hover :is(.project-cover,.project-image)::after { background-position: -30% 0; } }
 }
+
+/* The current project shares its accent with its stop on the journey. */
+:is(#hg-games, [data-journey="hg-games"], .journey-rail:has([data-journey="hg-games"].active)) { --project-ink: #69e6f2; }
+:is(#marketplace-project, [data-journey="marketplace-project"], .journey-rail:has([data-journey="marketplace-project"].active)) { --project-ink: #baabff; }
+:is(#python-project, [data-journey="python-project"], .journey-rail:has([data-journey="python-project"].active)) { --project-ink: #77e5b4; }
+:is(#flow-code-project, [data-journey="flow-code-project"], .journey-rail:has([data-journey="flow-code-project"].active)) { --project-ink: #ffd286; }
+:is(#voa-mundo-project, [data-journey="voa-mundo-project"], .journey-rail:has([data-journey="voa-mundo-project"].active)) { --project-ink: #ffadc9; }
+:is(#formacao, [data-journey="formacao"], .journey-rail:has([data-journey="formacao"].active)) { --project-ink: #ffb48a; }
+
+.project-card {
+  border-color: color-mix(in srgb, var(--project-ink) 27%, #172337);
+  background: linear-gradient(130deg, color-mix(in srgb, var(--project-ink) 7%, #0a1321), #080d18 70%);
+}
+.project-card .panel-top {
+  color: var(--project-ink);
+  border-bottom-color: color-mix(in srgb, var(--project-ink) 32%, #122137);
+  background: linear-gradient(110deg, color-mix(in srgb, var(--project-ink) 13%, #0a1527), #0b1425 80%);
+}
+.project-card .tags span, .project-card .index, .project-card .project-link { color: var(--project-ink); }
+.project-card .tags span { border-color: color-mix(in srgb, var(--project-ink) 32%, #172337); }
+.project-card:focus-within, .project-card:hover { border-color: var(--project-ink); }
+.project-card .live-dot, .journey-stop.active i { background: var(--project-ink); }
+.journey-stop small { color: #aebed9; }
+.journey-stop i { border-color: var(--project-ink); }
+.journey-stop.active {
+  background: color-mix(in srgb, var(--project-ink) 11%, #071322);
+  border-color: color-mix(in srgb, var(--project-ink) 58%, #172337);
+}
+.journey-stop.active i {
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--project-ink) 18%, transparent), 0 0 17px var(--project-ink);
+}
+#journey-path { stroke: var(--project-ink, #69e6f2); }
+#journey-light circle:not(:last-child) { fill: var(--project-ink, #69e6f2); }
+
+.filters button[aria-pressed="true"] {
+  background: #123a48; color: #d8fffc; border-color: #53c8ce;
+}
+.hero-copy h1 span, .section-heading h2 span, .timeline-intro h2 span, #skills-title span {
+  color: #92dcff;
+  background: linear-gradient(105deg, #87f0df, #99c7ff 54%, #c6b0ff);
+  background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.skill-card:focus-within, .skill-card:hover { border-color: #7699bb; }
+.timeline-content { border-inline-start: 2px solid #80d6d5; }
+
+/* The HG Games artwork is drawn with gradients, so it stays sharp at every size. */
+#hg-games .game-cover {
+  isolation: isolate;
+  background: radial-gradient(ellipse at 82% 26%, #47326e, transparent 48%),
+    linear-gradient(124deg, #0a142b 20%, #132d4b 62%, #221839);
+}
+#hg-games .game-orb {
+  width: clamp(105px, 16vw, 192px); height: auto; aspect-ratio: 1;
+  right: 7%; top: 10%; border: 1px solid #9aeaff8c;
+  background: radial-gradient(ellipse at 76% 76%, #0b1939 8%, transparent 66%),
+    repeating-linear-gradient(-18deg, #a2daff24 0 2px, transparent 3px 10px),
+    linear-gradient(148deg, #b6fff0, #5995c9 32%, #6960a6 65%, #22304d);
+  box-shadow: inset -14px -12px 27px #07142bd4, inset 3px 3px 10px #c8ffff91, 0 0 36px #699de73a;
+}
+#hg-games .game-orb::after {
+  content: ""; position: absolute; inset: 37% -23% 35%; border-radius: 50%;
+  border: 3px solid #b7c7ffba; border-top-color: transparent;
+  transform: rotate(-20deg); box-shadow: 0 3px 0 #77e9ef55, 0 6px 0 #bb9bf133;
+}
+#hg-games .game-cover::before {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(1px 1px at 23% 27%, #cfecff 95%, transparent),
+    radial-gradient(1px 1px at 70% 65%, #cebaff 95%, transparent);
+  background-size: 83px 71px, 111px 93px; opacity: .65;
+}
+#hg-games .game-grid {
+  background-image: linear-gradient(#65d9ec52 1px, transparent 1px), linear-gradient(90deg,#9c90fc54 1px,transparent 1px);
+}
+#hg-games .game-title { text-shadow: 0 3px 0 #203150, 0 0 17px #060c25; }
+#hg-games .game-title > span:first-child, #hg-games .pixel-dot { color: #84efef; }
+#hg-games .cover-overline { color: #b0eded; }
+
+@keyframes hg-grid-travel { to { background-position: 0 40px; } }
+@keyframes hg-planet-drift { to { transform: translate(-5px, 7px) rotate(3deg); } }
+@media screen and (prefers-reduced-motion: no-preference) {
+  body:not(.reduced-motion):not(.page-hidden) #hg-games .game-grid { animation: hg-grid-travel 4s linear infinite; }
+  body:not(.reduced-motion):not(.page-hidden) #hg-games .game-orb { animation: hg-planet-drift 5s ease-in-out infinite alternate; }
+  body:not(.reduced-motion) #journey-path { transition: stroke .4s; }
+  body:not(.reduced-motion) .project-link span { transition: transform .22s ease; }
+  body:not(.reduced-motion) .project-link:is(:hover,:focus-visible) span { transform: translate(3px,-3px); }
+}
+@media (forced-colors: active) {
+  .hero-copy h1 span, .section-heading h2 span, .timeline-intro h2 span, #skills-title span { -webkit-text-fill-color: CanvasText; }
+}
