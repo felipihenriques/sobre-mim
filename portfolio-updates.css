@@ -177,3 +177,14 @@
 @media (forced-colors: active) {
   .hero-copy h1 span, .section-heading h2 span, .timeline-intro h2 span, #skills-title span { -webkit-text-fill-color: CanvasText; }
 }
+/* Papo de Líder follows the green palette of the presentation. */
+:is(#papo-de-lider, [data-journey="papo-de-lider"], .journey-rail:has([data-journey="papo-de-lider"].active)) { --project-ink: #b6ed6f; }
+#papo-de-lider .papo-cover { height: auto; background: #061b12; }
+#papo-de-lider .papo-cover img { display: block; width: 100%; height: auto; }
+.journey-position-1 { top: 12%; }
+.journey-position-2 { top: 24%; }
+.journey-position-3 { top: 36%; }
+.journey-position-4 { top: 48%; }
+.journey-position-5 { top: 60%; }
+.journey-position-6 { top: 72%; }
+.journey-position-7 { left: 30%; top: 84%; }

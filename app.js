@@ -24,6 +24,7 @@
   filters.forEach(button => button.addEventListener('click', () => filterProjects(button.dataset.filter)));
 
   const entries = [
+    { name: 'Papo de Líder', description: 'Apresentação interativa · ambidestria emocional · liderança · indicadores operacionais', target: 'papo-de-lider' },
     { name: 'Linha do tempo', description: 'Experiência, liderança e Engenharia de Software', target: 'linha-do-tempo' },
     { name: 'Marketplace Digital', description: 'Projeto para cliente · AS IS · TO BE · automação', target: 'marketplace-project' },
     { name: 'HG Games', description: 'Projeto para cliente · desenvolvimento web', target: 'hg-games' },
