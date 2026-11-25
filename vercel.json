@@ -1,5 +1,5 @@
 {
   "framework": null,
-  "buildCommand": "echo static site ready",
-  "outputDirectory": "dist"
+  "buildCommand": "mkdir -p public && cp *.html *.js *.css public/ && cp -R assets public/ && cp dist/index.html public/index.html && cp -R dist/assets/* public/assets/",
+  "outputDirectory": "public"
 }
