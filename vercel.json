@@ -1,5 +1,5 @@
 {
   "framework": null,
-  "buildCommand": "mkdir -p public && cp *.html *.js *.css public/ && unzip -oq portfolio-felipi-vercel-foto-atualizada.zip 'assets/*' 'vendor/*' -d public && test -s public/assets/felipi-mascot.png && test -s public/vendor/three.min.js",
+  "buildCommand": "mkdir -p public && cp dist/*.html dist/*.js dist/*.css public/ && cp -R dist/assets dist/vendor public/ && test -s public/assets/felipi-mascot.png && test -s public/vendor/three.min.js",
   "outputDirectory": "public"
 }
